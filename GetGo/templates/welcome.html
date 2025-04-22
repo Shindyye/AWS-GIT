@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Welcome</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F7F7F7;
+            text-align: center;
+        }
+
+        /* HEADER */
+        .header {
+            background-color: #8ECFD1; /* Light blue */
+            display: flex;
+            padding: 30px; /* More internal spacing */
+            text-align: left; /* Align text to the left */
+            width: 100%; /* Full width */
+        }
+
+        .header img {
+            width: 150px; /* Adjust logo size */
+        }
+
+        /* CONTAINER */
+        .container {
+            margin: auto; /* More vertical space */
+            padding: 50px; /* More internal spacing */
+            max-width: 800px; /* Limit width for a balanced look */
+            background: #FFFFFF; /* White background */
+            border-radius: 10px; /* Rounded corners */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+            width: 1000px;
+            height: 400px;
+        }
+
+        h1 {
+            font-size: 82px;
+            font-weight: bold;
+        }
+
+        hr { /* Horizontal line */
+            width: 70%;
+            margin: 20px auto;
+            border: 1px solid #CCC;
+        }
+
+        .buttons {
+            display: flex;
+            justify-content: center; 
+            gap: 20px;
+        }
+
+        .user-btn, .admin-btn { /* User and Admin buttons */
+            background-color: #FFE083;
+            border: none;
+            padding: 14px 85px;
+            margin: 10px;
+            font-size: 25px;
+            cursor: pointer; /* Cursor on hover */
+            border-radius: 5px;
+            transition: 0.3s; /* Smooth transition */
+        }
+
+        .user-btn:hover, .admin-btn:hover { /* Hover effect */
+            background-color: #FFCC35;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #D7D9DC;
+            padding: 20px; /* Sesuaikan padding agar konsisten dengan header */
+            width: 100%; /* Pastikan footer mengambil lebar penuh */
+            box-sizing: border-box; /* Sertakan padding dalam perhitungan lebar */
+            margin: 0; /* Hilangkan margin default */
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: flex; /* Flexbox layout */
+            flex-direction: column; /* Vertical layout */
+            align-items: center;
+            gap: 5px;
+        }
+
+        .contact{
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .location{
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .contact img, .location img {
+            width: 16px;
+            gap: 5px;
+        }
+
+
+        html, body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+
+        /* Responsive Design for Mobile View */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: row; /* Stack header elements vertically */
+                align-items: center;
+                text-align: center;
+            }
+
+            .header img {
+                margin: 0 auto; /* Center the logo */
+            }
+
+            .nav-links {
+                margin: 0;
+                flex-direction: column; /* Stack navigation links vertically */
+                gap: 10px;
+            }
+
+            .filters {
+                flex-direction: column; /* Stack filter buttons vertically */
+                gap: 10px;
+            }
+
+            .filters button {
+                width: 100%; /* Make buttons full-width */
+                font-size: 16px; /* Adjust font size for smaller screens */
+            }
+
+            .car-container {
+                flex-direction: column; /* Stack car cards vertically */
+                align-items: center; /* Center align the cards */
+            }
+
+            .car-card {
+                width: 90%; /* Make cards take up most of the screen width */
+                max-width: none; /* Remove max-width restriction */
+            }
+
+            .car-card img {
+                height: auto; /* Allow image height to adjust proportionally */
+            }
+
+            .rent-btn {
+                width: 100%; /* Make rent button full-width */
+                font-size: 16px; /* Adjust font size */
+            }
+
+            footer {
+                font-size: 12px; /* Adjust footer text size */
+            }
+
+            .footer-container {
+                display: flex;
+                flex-direction: row;
+                gap: 10px; /* Increase spacing between footer elements */
+            }
+
+            .contact, .location {
+                flex-direction: column; /* Stack contact and location details vertically */
+                align-items: center;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .filters button {
+                font-size: 14px; /* Further reduce font size for very small screens */
+                padding: 10px 20px; /* Adjust padding */
+            }
+
+            .car-card {
+                padding: 10px; /* Reduce padding for smaller screens */
+            }
+
+            .rent-btn {
+                font-size: 14px; /* Adjust button font size */
+                padding: 8px 16px; /* Adjust button padding */
+            }
+
+            footer {
+                font-size: 10px; /* Further reduce footer text size */
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header">
+        <img src="{{ url_for('static', filename='images/GetGo.jpg') }}" alt="GetGo">
+    </div>
+
+    <div class="container">
+        <h1>Welcome!</h1>
+        <hr>
+        <div class="buttons">
+            <a href="{{ url_for('signup') }}">
+                <button class="user-btn">User</button>
+            </a>
+            <a href="{{ url_for('login_admin') }}">
+                <button class="admin-btn">Admin</button>
+            </a>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="contact">
+                <img src="{{ url_for('static', filename='images/mail.png') }}" alt="">
+                <span>get.go@gmail.com</span>
+                <img src="{{ url_for('static', filename='images/telephone.png') }}" alt="">
+                <span>0812-3456-7894</span>
+                <img src="{{ url_for('static', filename='images/instagram.png') }}" alt="">
+                <span>@getgo_carrent</span>
+            </div>
+            <div class="location">
+                <img src="{{ url_for('static', filename='images/location.png') }}" alt="">
+                <span>Calvin Tower RMCJ, Jl. Industri Raya No.Kav. 1 Blok B14, RT.3/RW.10, 
+                    East Pademangan, Kemayoran, Central Jakarta City, Jakarta 10610</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

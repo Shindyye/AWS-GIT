@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Car Details</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F7F7F7;
+        }
+
+        /* HEADER */
+        .header {
+            background-color: #8ECFD1;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header img {
+            width: 150px;
+            margin-left: 20px;
+        }
+        .nav-links {
+            margin-right: 30px;
+        }
+        .nav-links a {
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 10px;
+            color: black;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column; /* Stack image and card vertically */
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            padding: 80px 0;
+        }
+
+        .car-image {
+            width: 100%; /* Make the image responsive */
+            max-width: 450px; /* Limit the maximum width */
+            border-radius: 10px;
+            margin-bottom: 20px; /* Add spacing below the image */
+        }
+
+        .car-card {
+            background: white;
+            width: 60%; /* Adjust width of the container */
+            max-width: 600px;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column; /* Stack items vertically */
+            align-items: center;
+            text-align: center; /* Center text */
+        }
+
+        .car-details {
+            width: 100%;
+        }
+
+        .car-details h2 {
+            margin: 2px;
+            font-size: 25px;
+        }
+
+        .car-details p {
+            margin: 5px 0;
+            font-size: 16px;
+        }
+
+        .price {
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .rent-period {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 15px;
+        }
+
+        .back-btn, .pay-btn {
+            border: none;
+            padding: 12px 25px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .back-btn {
+            background-color: #E0E0E0;
+        }
+
+        .pay-btn {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        footer {
+            background: #D7D9DC;
+            padding: 30px;
+            width: 100%;
+            font-size: 10px;
+            text-align: center;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+        }
+
+
+        .footer-container {
+            display: flex; /* Flexbox layout */
+            flex-direction: column; /* Vertical layout */
+            align-items: center;
+            gap: 5px;
+        }
+
+        .contact, .location {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .contact img, .location img {
+            width: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <img src="logo.png" alt="GetGo">
+        <div class="nav-links">
+            <a href="#">Main Menu</a>
+            <a href="#">My Orders</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <img src="car-image.jpg" alt="Car" class="car-image">
+        <div class="car-card">
+            <div class="car-details">
+                <h2>Merek Mobil</h2>
+                <p><span style="background-color: yellow; padding: 2px 6px; border-radius: 3px;">Yellow</span></p>
+                <p>👤 7 Seaters</p>
+                <p><b>B 1234 ABC</b></p>
+                <p class="price">Rp500.000/day</p>
+                <p class="rent-period">Start Rent: 12 Maret 2025</p>
+                <p class="rent-period">End Rent: 12 April 2025</p>
+                <div class="button-container">
+                    <button class="back-btn">Back</button>
+                    <button class="pay-btn">Pay</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="contact">
+                <img src="{{ url_for('static', filename='images/mail.png') }}" alt="">
+                <span>get.go@gmail.com</span>
+                <img src="{{ url_for('static', filename='images/telephone.png') }}" alt="">
+                <span>0812-3456-7894</span>
+                <img src="{{ url_for('static', filename='images/instagram.png') }}" alt="">
+                <span>@getgo_carrent</span>
+            </div>
+            <div class="location">
+                <img src="{{ url_for('static', filename='images/location.png') }}" alt="">
+                <span>Calvin Tower RMCJ, Jl. Industri Raya No.Kav. 1 Blok B14, RT.3/RW.10, 
+                    East Pademangan, Kemayoran, Central Jakarta City, Jakarta 10610</span>
+            </div>
+        </div>
+    </footer>
+
+
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard Requested</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F7F7F7;
+        }
+
+        /* HEADER */
+        .header {
+            background-color: #8ECFD1;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header img {
+            width: 150px;
+            margin-left: 20px;
+        }
+        .nav-links {
+            margin-right: -50px;
+            display: flex; /* Make it a flex container */
+            align-items: center; /* Align items vertically */
+            gap: 15px; /* Add space between links and logout icon */
+        }
+
+        .nav-links a {
+            text-decoration: underline;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 10px;
+            color: black;
+        }
+
+        .logout-icon {
+            width: 24px; /* Atur lebar ikon */
+            height: 24px; /* Atur tinggi ikon agar proporsional */
+            margin-right: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            object-fit: contain; /* Pastikan gambar tidak terdistorsi */
+        }
+
+        .logout-icon:hover {
+            transform: scale(1.2);
+            opacity: 0.8;
+        }
+
+        /* FILTER BUTTONS */
+        .filters {
+            display: flex;
+            justify-content: center; /* Pusatkan tombol secara horizontal */
+            margin: 20px;
+        }
+        .filters button {
+            background-color: #FFE083;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+            width: 800px; /* Atur lebar tombol */
+            text-align: center; /* Pastikan teks berada di tengah */
+        }
+
+        /* CAR LISTINGS */
+        .car-container {
+            display: flex;
+            flex-direction: column; /* Ubah tata letak menjadi vertikal */
+            align-items: center; /* Pusatkan kartu secara horizontal */
+            gap: 20px; /* Tambahkan jarak antar kartu */
+            padding: 20px;
+        }
+
+        .car-card {
+            background: white;
+            width: 90%; /* Atur lebar kartu agar hampir penuh */
+            max-width: 1400px; /* Batasi lebar maksimum */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex; /* Gunakan Flexbox untuk tata letak konten */
+            flex-direction: row; /* Tata letak horizontal */
+            gap: 20px; /* Jarak antara gambar dan detail */
+            justify-content: space-between; /* Pisahkan elemen ke kiri dan kanan */
+        }
+
+        .car-card img {
+            width: 150px; /* Atur lebar gambar */
+            height: auto; /* Pertahankan rasio aspek gambar */
+            border-radius: 10px;
+        }
+
+        .car-details {
+            flex: 2; /* Isi ruang utama */
+            display: flex;
+            flex-direction: column;
+            gap: 5px; /* Kurangi jarak antar elemen */
+        }
+
+        .car-details p {
+            margin: 0; /* Hilangkan margin default */
+            font-size: 16px; /* Ukuran font untuk detail */
+            color: #333; /* Warna teks */
+        }
+
+        .car-details h3 {
+            margin: 0; /* Hilangkan margin default pada heading */
+            font-size: 18px; /* Ukuran font untuk judul */
+            font-weight: bold;
+        }
+
+        .car-dates {
+            flex: 1; /* Isi ruang di kanan */
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start; /* Posisi di atas */
+            align-items: flex-end; /* Posisi di kanan */
+            gap: 5px; /* Jarak antar elemen */
+        }
+
+        .car-dates p {
+            margin: 0;
+            font-size: 16px;
+            color: #333;
+        }
+
+        .car-dates .price {
+            margin-top: 10px; /* Tambahkan jarak atas untuk memisahkan dari tanggal */
+            font-size: 18px; /* Ukuran font untuk harga */
+            font-weight: bold;
+            color: #333;
+            text-align: right; /* Rata kanan */
+        }
+
+        .rent-btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #D7D9DC;
+            padding: 20px; /* Sesuaikan padding agar konsisten dengan header */
+            width: 100%; /* Pastikan footer mengambil lebar penuh */
+            box-sizing: border-box; /* Sertakan padding dalam perhitungan lebar */
+            margin: 0; /* Hilangkan margin default */
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: flex; /* Flexbox layout */
+            flex-direction: column; /* Vertical layout */
+            align-items: center;
+            gap: 5px;
+        }
+
+        html, body {
+            height: 100%; /* Ensure full height */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact, .location {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .contact img, .location img {
+            width: 16px;
+        }
+
+        /* Responsive Design for Mobile View */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: row; /* Stack header elements vertically */
+                align-items: center;
+                text-align: center;
+            }
+
+            .header img {
+                margin: 0 auto; /* Center the logo */
+            }
+
+            .nav-links {
+                margin: 0;
+                flex-direction: column; /* Stack navigation links vertically */
+                gap: 10px;
+            }
+
+            .filters {
+                flex-direction: column; /* Stack filter buttons vertically */
+                gap: 10px;
+            }
+
+            .filters button {
+                width: 100%; /* Make buttons full-width */
+                font-size: 16px; /* Adjust font size for smaller screens */
+            }
+
+            .car-container {
+                flex-direction: column; /* Stack car cards vertically */
+                align-items: center; /* Center align the cards */
+            }
+
+            .car-card {
+                width: 90%; /* Make cards take up most of the screen width */
+                max-width: none; /* Remove max-width restriction */
+            }
+
+            .car-card img {
+                height: auto; /* Allow image height to adjust proportionally */
+            }
+
+            .rent-btn {
+                width: 100%; /* Make rent button full-width */
+                font-size: 16px; /* Adjust font size */
+            }
+
+            footer {
+                font-size: 12px; /* Adjust footer text size */
+            }
+
+            .footer-container {
+                display: flex;
+                flex-direction: row;
+                gap: 10px; /* Increase spacing between footer elements */
+            }
+
+            .contact, .location {
+                flex-direction: column; /* Stack contact and location details vertically */
+                align-items: center;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .filters button {
+                font-size: 14px; /* Further reduce font size for very small screens */
+                padding: 10px 20px; /* Adjust padding */
+            }
+
+            .car-card {
+                padding: 10px; /* Reduce padding for smaller screens */
+            }
+
+            .rent-btn {
+                font-size: 14px; /* Adjust button font size */
+                padding: 8px 16px; /* Adjust button padding */
+            }
+
+            footer {
+                font-size: 10px; /* Further reduce footer text size */
+            }
+        }
+    </style>
+
+</head>
+<body>
+    <div class="header">
+        <img src="{{ url_for('static', filename='images/GetGo.jpg') }}" alt="GetGo">
+        <div class="nav-links">
+            <a href="{{ url_for('admin_main_menu') }}">Main Menu</a>
+            <a href="{{ url_for('admin_car_type') }}">History</a>
+            <a href="{{ url_for('logout') }}">
+                <img src="{{ url_for('static', filename='images/logout.png') }}" alt="Logout" class="logout-icon">
+            </a>
+        </div>
+    </div>
+
+    <!-- FILTER BUTTON -->
+    <div class="filters">
+        <button style="background-color: #FFC107; color: black;">
+            {{ date }}
+        </button>
+    </div>
+
+    <!-- CAR LISTINGS -->
+    <div class="car-container">
+        {% for rental in rentals %}
+        <div class="car-card">
+            <img src="{{ url_for('static', filename='images/' + rental.image) }}" alt="{{ rental.brand }} Car">
+            <div class="car-details">
+                <h3><b>{{ rental.brand }}</b></h3>
+                <p><span style="color: {{ rental.color }}">{{ rental.color }}</span></p>
+                <p>🚗 {{ rental.capacity }} Seaters</p>
+                <p><b>{{ rental.plate }}</b></p>
+            </div>
+            <div class="car-dates">
+                <p><b>Start Date:</b> {{ rental.start_rent_date }}</p>
+                <p><b>End Date:</b> {{ rental.end_rent_date }}</p>
+                <p class="price"><b>Rp{{ "{:,.0f}".format(rental.total_price_spent) }}</b></p>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="contact">
+                <img src="{{ url_for('static', filename='images/mail.png') }}" alt="">
+                <span>get.go@gmail.com</span>
+                <img src="{{ url_for('static', filename='images/telephone.png') }}" alt="">
+                <span>0812-3456-7894</span>
+                <img src="{{ url_for('static', filename='images/instagram.png') }}" alt="">
+                <span>@getgo_carrent</span>
+            </div>
+            <div class="location">
+                <img src="{{ url_for('static', filename='images/location.png') }}" alt="">
+                <span>Calvin Tower RMCJ, Jl. Industri Raya No.Kav. 1 Blok B14, RT.3/RW.10, 
+                    East Pademangan, Kemayoran, Central Jakarta City, Jakarta 10610</span>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

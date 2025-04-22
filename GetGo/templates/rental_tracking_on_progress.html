@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard Requested</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F7F7F7;
+        }
+
+        /* HEADER */
+        .header {
+            background-color: #8ECFD1;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .header img {
+            width: 150px;
+            margin-left: 20px;
+        }
+        .nav-links {
+            margin-right: -50px;
+            display: flex; /* Make it a flex container */
+            align-items: center; /* Align items vertically */
+            gap: 15px; /* Add space between links and logout icon */
+        }
+
+        .nav-links a {
+            text-decoration: underline;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 0 10px;
+            color: black;
+        }
+
+        .logout-icon {
+            width: 24px; /* Atur lebar ikon */
+            height: 24px; /* Atur tinggi ikon agar proporsional */
+            margin-right: 5px;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+            object-fit: contain; /* Pastikan gambar tidak terdistorsi */
+        }
+
+        .logout-icon:hover {
+            transform: scale(1.2);
+            opacity: 0.8;
+        }
+
+        /* FILTER BUTTONS */
+        .filters {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px;
+        }
+        .filters button {
+            background-color: #FFE083;
+            border: none;
+            padding: 15px 30px;
+            font-size: 18px;
+            border-radius: 50px;
+            cursor: pointer;
+        }
+
+        /* CAR LISTINGS */
+        .car-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center; /* Center align rows */
+            gap: 20px; /* Spacing between cards */
+            padding: 20px;
+        }
+        .car-card {
+            background: white;
+            width: calc(33.33% - 40px); /* 3 cards per row with spacing */
+            max-width: 300px; /* Prevent excessive stretching */
+            padding: 15px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        .car-card p.car-color {
+            color: #4A4A4A; /* Dark gray text */
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .car-card p.car-color .color-icon {
+            width: 16px;
+            height: 16px;
+            display: inline-block;
+            border-radius: 50%;
+            border: 1px solid black; /* Black border around color icon */
+        }
+
+        .car-card img {
+            width: 100%; /* Ensures it takes the full width of the card */
+            height: 180px; /* Set a fixed height for consistency */
+            object-fit: cover; /* Ensures images are cropped to fit without distortion */
+            border-radius: 10px;
+        }
+        
+        .sub-status-label {
+            display: inline-block;
+            padding: 5px 10px;
+            border-radius: 5px;
+            font-weight: normal;
+            text-transform: capitalize;
+        }
+        .pending { background: #FFE083; }
+        .denied { background: #F44336; color: white; }
+        .active { background: #4CAF50; color: white; }
+        .approved { background: #8ECFD1; color: white; }
+        .done { background: #45a049; color: white; }
+
+
+        /* FOOTER */
+        footer {
+            background: #D7D9DC;
+            padding: 20px; /* Sesuaikan padding agar konsisten dengan header */
+            width: 100%; /* Pastikan footer mengambil lebar penuh */
+            box-sizing: border-box; /* Sertakan padding dalam perhitungan lebar */
+            margin: 0; /* Hilangkan margin default */
+            text-align: center;
+            margin-top: auto;
+        }
+
+        .footer-container {
+            display: flex; /* Flexbox layout */
+            flex-direction: column; /* Vertical layout */
+            align-items: center;
+            gap: 5px;
+        }
+
+        html, body {
+            height: 100%; /* Ensure full height */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .contact, .location {
+            display: flex;
+            align-items: center;
+            margin-top: 10px;
+            gap: 10px;
+        }
+
+        .contact img, .location img {
+            width: 16px;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #4CAF50; 
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            z-index: 9999;
+            color: white;
+            font-weight: bold;
+        }
+
+        .popup button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            border: none;
+            background: white;
+            color: #4CAF50;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .popup button:hover {
+            background: lightgray;
+        }
+
+        /* Responsive Design for Mobile View */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: row; /* Stack header elements vertically */
+                align-items: center;
+                text-align: center;
+            }
+
+            .header img {
+                margin: 0 auto; /* Center the logo */
+            }
+
+            .nav-links {
+                margin: 0;
+                flex-direction: column; /* Stack navigation links vertically */
+                gap: 10px;
+            }
+
+            .filters {
+                flex-direction: column; /* Stack filter buttons vertically */
+                gap: 10px;
+            }
+
+            .filters button {
+                width: 100%; /* Make buttons full-width */
+                font-size: 16px; /* Adjust font size for smaller screens */
+            }
+
+            .car-container {
+                flex-direction: column; /* Stack car cards vertically */
+                align-items: center; /* Center align the cards */
+            }
+
+            .car-card {
+                width: 90%; /* Make cards take up most of the screen width */
+                max-width: none; /* Remove max-width restriction */
+            }
+
+            .car-card img {
+                height: auto; /* Allow image height to adjust proportionally */
+            }
+
+            .rent-btn {
+                width: 100%; /* Make rent button full-width */
+                font-size: 16px; /* Adjust font size */
+            }
+
+            footer {
+                font-size: 12px; /* Adjust footer text size */
+            }
+
+            .footer-container {
+                display: flex;
+                flex-direction: row;
+                gap: 10px; /* Increase spacing between footer elements */
+            }
+
+            .contact, .location {
+                flex-direction: column; /* Stack contact and location details vertically */
+                align-items: center;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .filters button {
+                font-size: 14px; /* Further reduce font size for very small screens */
+                padding: 10px 20px; /* Adjust padding */
+            }
+
+            .car-card {
+                padding: 10px; /* Reduce padding for smaller screens */
+            }
+
+            .rent-btn {
+                font-size: 14px; /* Adjust button font size */
+                padding: 8px 16px; /* Adjust button padding */
+            }
+
+            footer {
+                font-size: 10px; /* Further reduce footer text size */
+            }
+        }
+    </style>
+    
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            document.querySelectorAll(".sub-status-label").forEach(label => {
+                const text = label.textContent.trim().toLowerCase();
+                if (text.includes("pending")) label.classList.add("pending");
+                if (text.includes("denied")) label.classList.add("denied");
+                if (text.includes("active")) label.classList.add("active");
+                if (text.includes("approved")) label.classList.add("approved");
+                if (text.includes("done")) label.classList.add("done");
+            });
+        });
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            // Find flash messages (if they exist)
+            let flashMessages = document.querySelectorAll(".flash-message");
+
+            flashMessages.forEach(msg => {
+                let messageText = msg.innerText.trim();
+                
+                // Create a pop-up notification
+                let popup = document.createElement("div");
+                popup.className = "popup";
+                popup.innerHTML = `
+                    <p>${messageText}</p>
+                    <button onclick="this.parentElement.remove()">OK</button>
+                `;
+                document.body.appendChild(popup);
+
+                // Remove the original flash message from the page
+                msg.remove();
+            });
+        });
+    </script>
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="header">
+        <img src="{{ url_for('static', filename='images/GetGo.jpg') }}" alt="GetGo">
+        <div class="nav-links">
+            <a href="{{ url_for('main_menu') }}">Main Menu</a>
+            <a href="{{ url_for('my_orders') }}">My Orders</a>
+            <a href="{{ url_for('logout') }}">
+                <img src="{{ url_for('static', filename='images/logout.png') }}" alt="Logout" class="logout-icon">
+            </a>
+        </div>
+    </div>
+
+    <!-- FILTER BUTTONS -->
+    <div class="filters">
+        <a href="{{ url_for('my_orders') }}">
+            <button style="background-color: #FFC107; color: black;">On Progress</button>
+        </a>
+        <a href="{{ url_for('orders_completed') }}">
+            <button>Completed</button>
+        </a>
+    </div>
+
+    <!-- CAR LISTINGS -->
+    <div class="car-container">
+        {% for rental in rentals %}
+        <div class="car-card">
+            <img src="{{ url_for('static', filename='images/' + rental.image) }}" alt="{{ rental.brand }}">
+            <h3><b>{{ rental.brand }}</b></h3>
+            <p class="car-color">
+                <span class="color-icon" style="background-color: {{ rental.color }}"></span>
+                {{ rental.color }}
+            </p>
+            <p>🚗 {{ rental.capacity }} Seaters</p>
+            <p><b>{{ rental.plate }}</b></p>
+            <p><b>Rp{{ "{:,.0f}".format(rental.rent_price) }}/day</b></p>
+            <span class="sub-status-label 
+                {% if sub_status == 'Pending' %}pending
+                {% elif sub_status == 'Denied' %}denied
+                {% elif sub_status == 'Active' %}active
+                {% elif sub_status == 'Approved' %}approved
+                {% elif sub_status == 'Done' %}done{% endif %}">
+                {{ rental.sub_status }}
+            </span>
+        </div>
+        {% endfor %}
+    </div>
+    
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="footer-container">
+            <div class="contact">
+                <img src="{{ url_for('static', filename='images/mail.png') }}" alt="">
+                <span>get.go@gmail.com</span>
+                <img src="{{ url_for('static', filename='images/telephone.png') }}" alt="">
+                <span>0812-3456-7894</span>
+                <img src="{{ url_for('static', filename='images/instagram.png') }}" alt="">
+                <span>@getgo_carrent</span>
+            </div>
+            <div class="location">
+                <img src="{{ url_for('static', filename='images/location.png') }}" alt="">
+                <span>Calvin Tower RMCJ, Jl. Industri Raya No.Kav. 1 Blok B14, RT.3/RW.10, 
+                    East Pademangan, Kemayoran, Central Jakarta City, Jakarta 10610</span>
+            </div>
+        </div>
+    </footer>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div id="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash-message" data-category="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>

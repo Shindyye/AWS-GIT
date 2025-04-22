@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rent Date</title>
+    <style>
+        body {
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #F7F7F7;
+            text-align: center;
+        }
+
+        /* HEADER */
+        .header {
+            background-color: #8ECFD1;
+            padding: 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header img {
+            width: 150px;
+            margin-left: 20px;
+        }
+
+        .logout-icon {
+            width: 24px;
+            height: 24px;
+            margin-right: 20px;
+            cursor: pointer;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
+
+        .logout-icon:hover {
+            transform: scale(1.2);
+            opacity: 0.8;
+        }
+
+        /* CONTAINER */
+        .container {
+            margin: 50px auto;
+            padding: 50px;
+            max-width: 400px;
+            background: #FFFFFF;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            font-size: 28px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .date-picker {
+            width: 100%;
+            height: 40px;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #CCC;
+            border-radius: 5px;
+            text-align: center;
+        }
+
+        /* BUTTON */
+        .confirm-btn {
+            background-color: #ffd966;
+            border: none;
+            padding: 12px 25px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        .confirm-btn:hover {
+            background-color: #FFCC35;
+        }
+
+        /* FOOTER */
+        footer {
+            background: #D7D9DC;
+            padding: 20px;
+            font-size: 12px;
+            text-align: center;
+        }
+
+        .footer-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact, .location {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .contact img, .location img {
+            width: 16px;
+        }
+    </style>
+
+<script>
+    function validateDates() {
+        let startDate = document.getElementById("start_date").value;
+        let endDate = document.getElementById("end_date").value;
+        let today = new Date().toISOString().split("T")[0];
+
+        if (!startDate || !endDate) {
+            alert("Please select both start and end dates.");
+            return false;
+        }
+
+        if (startDate < today) {
+            alert("Start date cannot be in the past!");
+            return false;
+        }
+
+        if (endDate <= startDate) {
+            alert("End date must be after the start date!");
+            return false;
+        }
+
+        return true;  // Allow form submission
+    }
+</script>
+</head>
+
+<body>
+    <div class="header">
+        <img src="{{ url_for('static', filename='images/GetGo.jpg') }}" alt="GetGo">
+        <img src="{{ url_for('static', filename='images/logout.png') }}" alt="Logout" class="logout-icon">
+    </div>
+
+    <div class="container">
+        <form action="/date" method="POST" onsubmit="return validateDates()">
+            <div class="form-group">
+                <h2>Start Rent</h2>
+                <input type="date" id="start_date" name="start_date" class="date-picker" required>
+            </div>
+
+            <div class="form-group">
+                <h2>End Rent</h2>
+                <input type="date" id="end_date" name="end_date" class="date-picker" required>
+            </div>
+
+            <button type="submit" class="confirm-btn">Confirm</button>
+        </form>
+    </div>
+
+    <footer>
+        <div class="footer-container">
+            <div class="contact">
+                <img src="{{ url_for('static', filename='images/mail.png') }}" alt="">
+                <span>get.go@gmail.com</span>
+                <img src="{{ url_for('static', filename='images/telephone.png') }}" alt="">
+                <span>0812-3456-7894</span>
+                <img src="{{ url_for('static', filename='images/instagram.png') }}" alt="">
+                <span>@getgo_carrent</span>
+            </div>
+            <div class="location">
+                <img src="{{ url_for('static', filename='images/location.png') }}" alt="">
+                <span>Calvin Tower RMCJ, Jl. Industri Raya No.Kav. 1 Blok B14, RT.3/RW.10, 
+                    East Pademangan, Kemayoran, Central Jakarta City, Jakarta 10610</span>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        function validateDates() {
+            let startDate = document.getElementById("start_date").value;
+            let endDate = document.getElementById("end_date").value;
+            let today = new Date().toISOString().split("T")[0]; // Get today's date in YYYY-MM-DD format
+
+            if (startDate < today) {
+                alert("Start date cannot be in the past!");
+                return false;
+            }
+
+            if (endDate <= startDate) {
+                alert("End date must be after the start date!");
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+</body>
+</html>

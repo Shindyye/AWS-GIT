@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login & Register</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+        }
+
+        body {
+            display: flex;
+            height: 100vh;
+            align-items: center;
+            justify-content: center;
+            background-color: #f7f7f7;
+        }
+
+        .container {
+            display: flex;
+            width: 900px;
+            height: 500px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .login-section {
+            flex: 1;
+            background: white;
+            padding: 50px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .register-section {
+            flex: 1;
+            background: #8accca;
+            padding: 50px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        h2 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 80%;
+            padding: 12px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #ffd966;
+            border: none;
+            padding: 12px 25px;
+            cursor: pointer;
+            font-size: 18px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #e6c759;
+        }
+
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+        }
+
+        .popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ff4d4d; /* Red background for danger messages */
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            font-family: Verdana, Geneva, Tahoma, sans-serif;
+            z-index: 9999;
+            color: white;
+            font-weight: bold;
+        }
+
+        .popup button {
+            margin-top: 10px;
+            padding: 8px 12px;
+            border: none;
+            background: white;
+            color: #ff4d4d;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .popup button:hover {
+            background: lightgray;
+        }
+
+        /* Responsive Design for Mobile View */
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: row; /* Stack header elements vertically */
+                align-items: center;
+                text-align: center;
+            }
+
+            .header img {
+                margin: 0 auto; /* Center the logo */
+            }
+
+            .nav-links {
+                margin: 0;
+                flex-direction: column; /* Stack navigation links vertically */
+                gap: 10px;
+            }
+
+            .filters {
+                flex-direction: column; /* Stack filter buttons vertically */
+                gap: 10px;
+            }
+
+            .filters button {
+                width: 100%; /* Make buttons full-width */
+                font-size: 16px; /* Adjust font size for smaller screens */
+            }
+
+            .car-container {
+                flex-direction: column; /* Stack car cards vertically */
+                align-items: center; /* Center align the cards */
+            }
+
+            .car-card {
+                width: 90%; /* Make cards take up most of the screen width */
+                max-width: none; /* Remove max-width restriction */
+            }
+
+            .car-card img {
+                height: auto; /* Allow image height to adjust proportionally */
+            }
+
+            .rent-btn {
+                width: 100%; /* Make rent button full-width */
+                font-size: 16px; /* Adjust font size */
+            }
+
+            footer {
+                font-size: 12px; /* Adjust footer text size */
+            }
+
+            .footer-container {
+                display: flex;
+                flex-direction: row;
+                gap: 10px; /* Increase spacing between footer elements */
+            }
+
+            .contact, .location {
+                flex-direction: column; /* Stack contact and location details vertically */
+                align-items: center;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .filters button {
+                font-size: 14px; /* Further reduce font size for very small screens */
+                padding: 10px 20px; /* Adjust padding */
+            }
+
+            .car-card {
+                padding: 10px; /* Reduce padding for smaller screens */
+            }
+
+            .rent-btn {
+                font-size: 14px; /* Adjust button font size */
+                padding: 8px 16px; /* Adjust button padding */
+            }
+
+            footer {
+                font-size: 10px; /* Further reduce footer text size */
+            }
+        }
+    </style>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // Find flash messages (if they exist)
+            let flashMessages = document.querySelectorAll(".flash-message");
+
+            flashMessages.forEach(msg => {
+                let messageText = msg.innerText.trim();
+                
+                // Create a pop-up notification
+                let popup = document.createElement("div");
+                popup.className = "popup";
+                popup.innerHTML = `
+                    <p>${messageText}</p>
+                    <button onclick="this.parentElement.remove()">OK</button>
+                `;
+                document.body.appendChild(popup);
+
+                // Remove the original flash message from the page
+                msg.remove();
+            });
+        });
+    </script>
+</head>
+<body>
+    <div class="logo">
+        <img src="{{ url_for('static', filename='images/GetGo.jpg') }}" alt="GetGo" width="120">
+    </div>
+    <div class="container">
+        <div class="login-section">
+            <h2>Login</h2>
+            <form method="POST" action="{{ url_for('login') }}">
+                <input type="text" name="email" placeholder="Email" required>
+                <input type="password" name="password" placeholder="Password" required>
+                <button type="submit">Log In</button>
+            </form>
+        </div>
+        <div class="register-section">
+            <h2>Register</h2>
+            <p>Don't have an account? Register one!</p>
+            <form action="{{ url_for('signup') }}" method="GET">
+                <button type="submit">Register an account</button>
+            </form>
+        </div>
+    </div>
+    {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+            <div id="flash-container">
+                {% for category, message in messages %}
+                    <div class="flash-message" data-category="{{ category }}">{{ message }}</div>
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% endwith %}
+</body>
+</html>
